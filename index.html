@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nyx Web Chat Widget: Real-time Empathic 3D Agent</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fonts: Plus Jakarta Sans for headers, Inter for readability -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: '#ff4757',
+                        slate: '#1e293b',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- GitHub Buttons Script -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <style>
+        body { background-color: #ffffff; color: #1e293b; }
+        .btn-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.25rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+        .btn-dark { background-color: #1e293b; color: white; }
+        .btn-dark:hover { background-color: #334155; transform: translateY(-1px); }
+        .btn-light { background-color: #e2e8f0; color: #1e293b; }
+        .btn-light:hover { background-color: #cbd5e1; color: #0f172a; transform: translateY(-1px); }
+        .btn-outline { border: 2px solid #e2e8f0; color: #475569; }
+        .btn-outline:hover { border-color: #1e293b; color: #1e293b; }
+        
+        .cloud-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 20px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            background: white;
+            font-weight: 600;
+            color: #475569;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            transition: all 0.2s;
+        }
+        .cloud-btn:hover { border-color: #cbd5e1; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); transform: translateY(-2px); }
+        
+        .feature-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+        .teaser-shadow { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand selection:text-white relative">
+
+    <!-- Top Left Branding -->
+    <div class="absolute top-6 left-6 hidden md:flex items-center text-sm font-medium text-gray-500 font-sans">
+        Designed by&nbsp;<a href="https://myned.ai" class="text-[#2e3a87] hover:text-brand transition-colors">Myned AI</a>
+    </div>
+
+    <!-- Top Right GitHub Buttons -->
+    <div class="absolute top-6 right-6 hidden md:flex items-center gap-3">
+        <!-- Star Repo -->
+        <a class="github-button" href="https://github.com/myned-ai/avatar-chat-widget" data-color-scheme="no-preference: light; light: light; dark: dark;" data-icon="octicon-star" data-size="large" data-show-count="false" aria-label="Star myned-ai/avatar-chat-widget on GitHub">Star</a>
+        <!-- Follow Org -->
+        <a class="github-button" href="https://github.com/myned-ai" data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large" aria-label="Follow @myned-ai on GitHub">Follow @myned-ai</a>
+    </div>
+
+    <!-- HEADER / TITLE -->
+    <header class="max-w-4xl mx-auto px-6 pt-12 pb-6 text-center">
+        <h1 class="font-display text-4xl md:text-5xl font-bold tracking-tight mb-4 leading-tight text-[#2e3a87]">
+            Nyx Web Chat Widget
+        </h1>
+        <h2 class="font-display text-xl md:text-2xl font-medium text-gray-500 mb-2">
+            The Open Source, Empathic, Real-Time 3D Agent for the Web
+        </h2>
+    </header>
+
+    <!-- HERO: Video left + GitHub buttons right -->
+    <section id="demo" class="max-w-5xl mx-auto px-6 mb-12">
+        <div class="flex flex-col md:flex-row items-center gap-10 md:gap-16">
+            <!-- Video (left) -->
+            <div class="w-full md:w-[44%] flex-shrink-0">
+                <div class="teaser-shadow rounded-2xl overflow-hidden bg-gray-50 border border-gray-200 relative" style="aspect-ratio: 694 / 794;">
+                    <video autoplay loop muted playsinline src="myned_widget.mp4" class="w-full h-full object-cover"></video>
+                </div>
+            </div>
+            <!-- Buttons + description (right) -->
+            <div class="w-full flex-1 flex flex-col justify-center gap-12 pb-20">
+                <p class="text-base text-gray-500 max-w-md leading-relaxed">
+                    Nyx Web Chat widget enables full-duplex voice interaction. The user speaks, interrupts, and receives visual feedback in real-time, with the avatar powered by our custom audio-to-motion engine.
+                </p>
+                <div class="grid grid-cols-2 gap-3 max-w-md">
+                    <!-- Row 1: GitHub repos -->
+                    <a href="https://github.com/myned-ai/avatar-chat-widget" class="btn-pill btn-dark justify-center text-center">
+                        <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        Avatar Widget
+                    </a>
+                    <a href="https://github.com/myned-ai/avatar-chat-server" class="btn-pill btn-dark justify-center text-center">
+                        <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        Agent Server
+                    </a>
+                    <!-- Row 2: HuggingFace + Try Nyx -->
+                    <a href="https://huggingface.co/myned-ai" class="btn-pill btn-light justify-center text-center">
+                        <!-- HuggingFace logo -->
+                        <span class="text-xl">🤗</span>
+                        HuggingFace
+                    </a>
+                    <a href="https://myned.ai" class="btn-pill btn-light justify-center text-center">
+                        <svg class="w-5 h-5 flex-shrink-0 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        Try Nyx
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- QUICK START SECTION -->
+    <section class="max-w-6xl mx-auto px-4 py-16">
+        <div class="text-center mb-12">
+            <h2 class="font-display text-3xl font-bold mb-4 text-[#2e3a87]">Quick Start</h2>
+            <p class="text-gray-500 max-w-2xl mx-auto">
+                Get up and running in minutes. Deploy the server and embed the widget on any site.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+            
+            <!-- Server Setup -->
+            <div class="bg-slate-50 border border-slate-200 rounded-xl p-6 flex flex-col h-full">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold">1</div>
+                    <h3 class="font-display font-bold text-xl text-[#2e3a87]">Deploy Server</h3>
+                </div>
+                <div class="prose prose-sm prose-slate max-w-none text-gray-600 flex-grow flex flex-col">
+                    <p class="mb-3">The server handles audio processing and agent communication.</p>
+                    
+                    <pre class="bg-slate-900 rounded-lg p-4 overflow-x-auto mb-4 text-xs font-mono text-slate-300 whitespace-pre-wrap leading-relaxed"><span class="text-slate-500"># 1. Clone & Setup</span>
+git clone https://github.com/myned-ai/avatar-chat-server.git
+cd avatar-chat-server
+uv sync
+
+<span class="text-slate-500"># 2. Configure Environment</span>
+Create environmental variables as seen on .env.example
+<span class="text-slate-500"># Required: Set OPENAI_API_KEY or GEMINI_API_KEY
+# Optional: Set AUTH_SECRET_KEY for secured access</span>
+
+<span class="text-slate-500"># 3. Add Knowledge (Optional)</span>
+<span class="text-slate-500"># Use a tool like https://gitingest.com/ to convert your website to knowledge base text
+# Set KNOWLEDGE_BASE_SOURCE env variable to the location of your knowledge base text to ground the agent</span>
+
+<span class="text-slate-500"># 4. Run Server</span>
+uv run python src/main.py</pre>
+                    
+                    <div class="flex flex-col gap-2 text-xs bg-blue-50 p-3 rounded-lg border border-blue-200 mt-auto">
+                        <strong class="text-blue-900">🔒 Production Security:</strong>
+                        <div class="text-blue-800 space-y-1">
+                            <p class="m-0 mb-1">Update your <code class="bg-white px-1 rounded text-blue-700 border border-blue-200">environmental variables</code> configuration:</p>
+                            <ul class="list-disc pl-4 m-0 space-y-1">
+                                <li>Set <code class="bg-white px-1 rounded text-blue-700 border border-blue-200">AUTH_ENABLED=true</code></li>
+                                <li>Generate Key: <code class="bg-white px-1 rounded text-blue-700 border border-blue-200">openssl rand -hex 32</code></li>
+                                <li>Set <code class="bg-white px-1 rounded text-blue-700 border border-blue-200">AUTH_SECRET_KEY=...</code></li>
+                                <li>Set <code class="bg-white px-1 rounded text-blue-700 border border-blue-200">AUTH_ALLOWED_ORIGINS=...</code></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Widget Setup -->
+            <div class="bg-slate-50 border border-slate-200 rounded-xl p-6 flex flex-col h-full">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 font-bold">2</div>
+                    <h3 class="font-display font-bold text-xl text-[#2e3a87]">Embed Widget</h3>
+                </div>
+                <div class="prose prose-sm prose-slate max-w-none text-gray-600 flex-grow flex flex-col">
+                    <p class="mb-3">Add the widget to any HTML page using the CDN link.</p>
+                    
+                    <pre class="bg-slate-900 rounded-lg p-4 overflow-x-auto mb-4 text-xs font-mono text-slate-300 whitespace-pre-wrap leading-relaxed">&lt;!-- Container --&gt;
+&lt;div id="avatar-chat"&gt;&lt;/div&gt;
+
+&lt;!-- CDN Script --&gt;
+&lt;script src="https://cdn.jsdelivr.net/npm/@myned-ai/avatar-chat-widget"&gt;&lt;/script&gt;
+
+&lt;script&gt;
+  AvatarChat.init({
+    container: '#avatar-chat',
+    serverUrl: 'wss://your-server.com/ws',
+    authEnabled: true, 
+    position: 'bottom-right'
+  });
+&lt;/script&gt;</pre>
+
+                    <div class="flex flex-col gap-2 text-xs bg-emerald-50 p-3 rounded-lg border border-emerald-200 mt-auto">
+                        <strong class="text-emerald-900">🔑 Secure Integration:</strong>
+                        <div class="text-emerald-800 space-y-1">
+                            <p class="m-0 mb-1">Authenticated connection flow:</p>
+                            <ul class="list-disc pl-4 m-0 space-y-1">
+                                <li>Backend: Sign token with <code class="bg-white px-1 rounded text-emerald-700 border border-emerald-200">AUTH_SECRET_KEY</code></li>
+                                <li>Frontend: Fetch token from API</li>
+                                <li>Init: Pass to <code class="bg-white px-1 rounded text-emerald-700 border border-emerald-200">token</code> param</li>
+                                <li>Result: <code class="bg-white px-1 rounded text-emerald-700 border border-emerald-200">wss://.../ws?token=...</code></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CLOUD DEPLOYMENT BUTTONS -->
+    <section class="max-w-4xl mx-auto px-4 mb-20">
+        <div class="bg-slate-100 border border-slate-200 rounded-xl p-8 text-center shadow-inner">
+            <h3 class="font-display font-bold text-lg mb-2 text-[#2e3a87]">One-Click Deployment</h3>
+            <p class="text-sm text-gray-500 mb-6">Fill in the required fields (e.g. API keys) and keep the defaults for everything else — you're good to go.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmyned-ai%2Favatar-chat-server%2Frefs%2Fheads%2Fmain%2Fazure%2Fazuredeploy.json" target="_blank" class="cloud-btn hover:border-blue-400 hover:text-blue-700">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Microsoft_Azure.svg" class="w-5 h-5" alt="Azure">
+                    Deploy to Azure
+                </a>
+                <a href="https://deploy.cloud.run/?git_repo=https://github.com/myned-ai/avatar-chat-server" target="_blank" class="cloud-btn hover:border-blue-400 hover:text-blue-700">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="w-5 h-5" alt="GCloud">
+                    Deploy to GCP
+                </a>
+                <a href="https://console.aws.amazon.com/cloudformation/home#/stacks/new?stackName=avatar-chat-server&templateURL=https://raw.githubusercontent.com/myned-ai/avatar-chat-server/main/cloudformation.yaml" target="_blank" class="cloud-btn hover:border-blue-400 hover:text-blue-700">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" class="w-5 h-5" alt="AWS">
+                    Deploy to AWS
+                </a>
+            </div>
+            <p class="text-xs text-gray-400 mt-4">All deployment scripts are available in the <a href="https://github.com/myned-ai/avatar-chat-server" class="text-[#2e3a87] hover:text-brand underline">server repo</a>. Minimal instances need to be set manual on GCP.</p>
+        </div>
+    </section>
+
+    <!-- CORE CAPABILITIES (Techie but Readable) -->
+    <section class="max-w-6xl mx-auto px-4 py-10">
+        <div class="text-center mb-16">
+            <h2 class="font-display text-3xl font-bold mb-4 text-[#2e3a87]">Features & Capabilities</h2>
+            <p class="text-gray-500 max-w-2xl mx-auto">
+                Designed for natural human connection, built on robust open-source infrastructure.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+            
+            <!-- Feature 1 -->
+            <div>
+                <span class="feature-icon">🗣️</span>
+                <h3 class="font-display font-bold text-xl mb-2 text-[#2e3a87]">Multi-Directional Voice</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">
+                    True full-duplex communication. Users can speak while the avatar is speaking. The system handles <strong>Accurate Interruption</strong> (VAD) to stop the avatar instantly when the user cuts in, just like a real conversation.
+                </p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div>
+                <span class="feature-icon">🎭</span>
+                <h3 class="font-display font-bold text-xl mb-2 text-[#2e3a87]">Empathic Expression</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">
+                    Beyond simple lip-sync. We use <strong>Blendshapes</strong> to drive natural facial movements—eyebrows, blinks, and smiles—that match the emotional tone of the voice response.
+                </p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div>
+                <span class="feature-icon">⚡</span>
+                <h3 class="font-display font-bold text-xl mb-2 text-[#2e3a87]">CPU-Optimized (Quantized)</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">
+                    The "Audio to Expression" model is heavily quantized. It runs efficiently on standard CPUs, meaning you don't need expensive GPU instances to host the avatar server.
+                </p>
+            </div>
+
+            <!-- Feature 4 -->
+            <div>
+                <span class="feature-icon">📝</span>
+                <h3 class="font-display font-bold text-xl mb-2 text-[#2e3a87]">Live Transcription & Subtitles</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">
+                    Includes a built-in UI for real-time subtitle sync. Users can read along with the conversation, ensuring accessibility and clarity in noisy environments.
+                </p>
+            </div>
+
+            <!-- Feature 5 -->
+            <div>
+                <span class="feature-icon">🧠</span>
+                <h3 class="font-display font-bold text-xl mb-2 text-[#2e3a87]">Basic RAG Implementation</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">
+                    Out-of-the-box support for Retrieval Augmented Generation. Feed the avatar your product manuals or FAQs, and it will answer based on your specific data.
+                </p>
+            </div>
+
+            <!-- Feature 6 -->
+            <div>
+                <span class="feature-icon">🔒</span>
+                <h3 class="font-display font-bold text-xl mb-2 text-[#2e3a87]">Production Security</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">
+                    Secured via <strong>HMAC & Token-based authentication</strong>. The widget requires a signed token from your backend to initiate a WebSocket connection, preventing unauthorized usage of your LLM credits.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ARCHITECTURE DEEP DIVE -->
+    <section class="bg-slate-50 py-20 mt-12 border-y border-gray-200">
+        <div class="max-w-4xl mx-auto px-4">
+            <h2 class="font-display text-3xl font-bold mb-8 text-[#2e3a87]">System Architecture</h2>
+            
+            <div class="space-y-8">
+                <!-- Step 1 -->
+                <div class="flex gap-4 md:gap-8 items-start">
+                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold">1</div>
+                    <div>
+                        <h3 class="font-bold text-lg text-[#2e3a87]">The Widget (Client)</h3>
+                        <p class="text-gray-500 text-sm mt-1">
+                            A lightweight JavaScript bundle. It captures microphone audio using the Web Audio API and streams it via WebSocket. It renders the 3D Avatar using Three.js/Gaussian Splatting.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="flex gap-4 md:gap-8 items-start">
+                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-brand text-white flex items-center justify-center font-bold">2</div>
+                    <div>
+                        <h3 class="font-bold text-lg text-[#2e3a87]">The Server (Orchestrator)</h3>
+                        <p class="text-gray-500 text-sm mt-1">
+                            A Python-based WebSocket server. It manages the state and security (handshake). It acts as a proxy between the user and the LLM provider (OpenAI/Google) to protect API keys.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="flex gap-4 md:gap-8 items-start">
+                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold">3</div>
+                    <div>
+                        <h3 class="font-bold text-lg text-[#2e3a87]">Audio-to-Expression Engine</h3>
+                        <p class="text-gray-500 text-sm mt-1">
+                            As audio flows back from the LLM, our quantized model analyzes the waveform in real-time to generate "Visemes" (mouth shapes) and Blendshape weights. This data is streamed alongside the audio to the client for perfect sync.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-50 border-t border-gray-200 py-10">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-gray-500">
+            <div class="flex flex-col gap-2">
+                <span class="font-bold text-slate-900">Nyx Web Chat Widget</span>
+                <span>Licensed under MIT.</span>
+            </div>
+            <div class="flex gap-6">
+                <a href="https://github.com/myned-ai/avatar-chat-widget" class="hover:text-brand">Widget Source</a>
+                <a href="https://github.com/myned-ai/avatar-chat-server" class="hover:text-brand">Server Source</a>
+                <a href="https://github.com/myned-ai/avatar-chat-server/issues" class="hover:text-brand">Log Issue</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
