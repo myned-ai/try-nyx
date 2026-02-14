@@ -20,7 +20,7 @@
                     },
                     colors: {
                         brand: '#ff4757',
-                        slate: '#1e293b',
+                        secondary: '#1e293b',
                     }
                 }
             }
@@ -151,22 +151,25 @@
                 <div class="prose prose-sm prose-slate max-w-none text-gray-600 flex-grow flex flex-col">
                     <p class="mb-3">The server handles audio processing and agent communication.</p>
                     
-                    <pre class="bg-slate-900 rounded-lg p-4 overflow-x-auto mb-4 text-xs font-mono text-slate-300 whitespace-pre-wrap leading-relaxed"><span class="text-slate-500"># 1. Clone & Setup</span>
+                    <pre class="p-0 overflow-x-auto mb-4 text-xs font-mono text-slate-600 whitespace-pre-wrap leading-relaxed"><span class="text-slate-400"># 1. Clone & Setup</span>
 git clone https://github.com/myned-ai/avatar-chat-server.git
 cd avatar-chat-server
 uv sync
 
-<span class="text-slate-500"># 2. Configure Environment</span>
+<span class="text-slate-400"># 2. Configure Environment</span>
 Create environmental variables as seen on .env.example
-<span class="text-slate-500"># Required: Set OPENAI_API_KEY or GEMINI_API_KEY
+<span class="text-slate-400"># Required: Set OPENAI_API_KEY or GEMINI_API_KEY
 # Optional: Set AUTH_SECRET_KEY for secured access</span>
 
-<span class="text-slate-500"># 3. Add Knowledge (Optional)</span>
-<span class="text-slate-500"># Use a tool like https://gitingest.com/ to convert your website to knowledge base text
+<span class="text-slate-400"># 3. Add Knowledge (Optional)</span>
+<span class="text-slate-400"># Use a tool like https://gitingest.com/ to convert your website to knowledge base text
 # Set KNOWLEDGE_BASE_SOURCE env variable to the location of your knowledge base text to ground the agent</span>
 
-<span class="text-slate-500"># 4. Run Server</span>
-uv run python src/main.py</pre>
+<span class="text-slate-400"># 4. Run Server</span>
+uv run python src/main.py
+
+# Use the docker setup if you prefer containerization
+docker-compose up -d</pre>
                     
                     <div class="flex flex-col gap-2 text-xs bg-blue-50 p-3 rounded-lg border border-blue-200 mt-auto">
                         <strong class="text-blue-900">🔒 Production Security:</strong>
@@ -192,7 +195,7 @@ uv run python src/main.py</pre>
                 <div class="prose prose-sm prose-slate max-w-none text-gray-600 flex-grow flex flex-col">
                     <p class="mb-3">Add the widget to any HTML page using the CDN link.</p>
                     
-                    <pre class="bg-slate-900 rounded-lg p-4 overflow-x-auto mb-4 text-xs font-mono text-slate-300 whitespace-pre-wrap leading-relaxed">&lt;!-- Container --&gt;
+                    <pre class="p-0 overflow-x-auto mb-4 text-xs font-mono text-slate-600 whitespace-pre-wrap leading-relaxed">&lt;!-- Container --&gt;
 &lt;div id="avatar-chat"&gt;&lt;/div&gt;
 
 &lt;!-- CDN Script --&gt;
@@ -244,7 +247,7 @@ uv run python src/main.py</pre>
                     Deploy to AWS
                 </a>
             </div>
-            <p class="text-xs text-gray-400 mt-4">All deployment scripts are available in the <a href="https://github.com/myned-ai/avatar-chat-server" class="text-[#2e3a87] hover:text-brand underline">server repo</a>. Minimal instances need to be set manual on GCP.</p>
+            <p class="text-xs text-gray-400 mt-4">All deployment scripts are available in the <a href="https://github.com/myned-ai/avatar-chat-server" class="text-[#2e3a87] hover:text-brand underline">server repo</a>.<br/>* Azure is set to Always On but still need some warmup.* Minimal instances need to be set manual on GCP for Always On.</p>
         </div>
     </section>
 
@@ -253,7 +256,7 @@ uv run python src/main.py</pre>
         <div class="text-center mb-16">
             <h2 class="font-display text-3xl font-bold mb-4 text-[#2e3a87]">Features & Capabilities</h2>
             <p class="text-gray-500 max-w-2xl mx-auto">
-                Designed for natural human connection, built on robust open-source infrastructure.
+                Designed for natural human connection, built on robust open-source research and cutting edge infrastructure.
             </p>
         </div>
 
@@ -298,9 +301,9 @@ uv run python src/main.py</pre>
             <!-- Feature 5 -->
             <div>
                 <span class="feature-icon">🧠</span>
-                <h3 class="font-display font-bold text-xl mb-2 text-[#2e3a87]">Basic RAG Implementation</h3>
+                <h3 class="font-display font-bold text-xl mb-2 text-[#2e3a87]">Answers From Your Data</h3>
                 <p class="text-sm text-gray-500 leading-relaxed">
-                    Out-of-the-box support for Retrieval Augmented Generation. Feed the avatar your product manuals or FAQs, and it will answer based on your specific data.
+                    Out-of-the-box support for custom knowledge. Give the avatar your product manuals, FAQs, or other documents, and it will provide answers based on your specific content.
                 </p>
             </div>
 
@@ -324,12 +327,17 @@ uv run python src/main.py</pre>
             <div class="space-y-8">
                 <!-- Step 1 -->
                 <div class="flex gap-4 md:gap-8 items-start">
-                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold">1</div>
+                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-brand text-white flex items-center justify-center font-bold">1</div>
                     <div>
-                        <h3 class="font-bold text-lg text-[#2e3a87]">The Widget (Client)</h3>
-                        <p class="text-gray-500 text-sm mt-1">
-                            A lightweight JavaScript bundle. It captures microphone audio using the Web Audio API and streams it via WebSocket. It renders the 3D Avatar using Three.js/Gaussian Splatting.
+                        <h3 class="font-bold text-lg text-[#2e3a87]">Client-Side (Widget)</h3>
+                        <p class="text-gray-500 text-sm mt-1 mb-2">
+                            A lightweight, framework-agnostic JavaScript bundle that embeds into any website.
                         </p>
+                        <ul class="list-disc pl-5 text-gray-500 text-sm space-y-1">
+                            <li><strong>Audio Capture:</strong> Captures microphone input using Web Audio API and streams it via WebSocket.</li>
+                            <li><strong>3D Rendering:</strong> Renders the avatar using Three.js and 3D Gaussian Splatting for cinematic fidelity.</li>
+                            <li><strong>Authentication:</strong> Handles secure HMAC token exchange to prevent unauthorized usage.</li>
+                        </ul>
                     </div>
                 </div>
 
@@ -337,21 +345,31 @@ uv run python src/main.py</pre>
                 <div class="flex gap-4 md:gap-8 items-start">
                     <div class="flex-shrink-0 w-10 h-10 rounded-full bg-brand text-white flex items-center justify-center font-bold">2</div>
                     <div>
-                        <h3 class="font-bold text-lg text-[#2e3a87]">The Server (Orchestrator)</h3>
-                        <p class="text-gray-500 text-sm mt-1">
-                            A Python-based WebSocket server. It manages the state and security (handshake). It acts as a proxy between the user and the LLM provider (OpenAI/Google) to protect API keys.
+                        <h3 class="font-bold text-lg text-[#2e3a87]">Server-Side (Orchestrator)</h3>
+                        <p class="text-gray-500 text-sm mt-1 mb-2">
+                            A Python-based WebSocket server that acts as the central brain and security layer.
                         </p>
+                        <ul class="list-disc pl-5 text-gray-500 text-sm space-y-1">
+                            <li><strong>LLM Proxy:</strong> Manages state and forwards audio/text to AI providers (OpenAI Realtime/Gemini Live) to protect API keys.</li>
+                            <li><strong>Connection Management:</strong> Handles WebSocket handshakes, rate limiting, and session persistence.</li>
+                            <li><strong>Modular Agents:</strong> Pluggable system to easily switch between different AI backends or custom implementations.</li>
+                        </ul>
                     </div>
                 </div>
 
                 <!-- Step 3 -->
                 <div class="flex gap-4 md:gap-8 items-start">
-                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold">3</div>
+                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-brand text-white flex items-center justify-center font-bold">3</div>
                     <div>
                         <h3 class="font-bold text-lg text-[#2e3a87]">Audio-to-Expression Engine</h3>
-                        <p class="text-gray-500 text-sm mt-1">
-                            As audio flows back from the LLM, our quantized model analyzes the waveform in real-time to generate "Visemes" (mouth shapes) and Blendshape weights. This data is streamed alongside the audio to the client for perfect sync.
+                        <p class="text-gray-500 text-sm mt-1 mb-2">
+                            A highly optimized inference engine enabling real-time facial animation from audio input.
                         </p>
+                        <ul class="list-disc pl-5 text-gray-500 text-sm space-y-1">
+                            <li><strong>Wav2Arkit Model:</strong> Analyzes incoming AI audio to generate 52 ARKit blendshapes in real-time.</li>
+                            <li><strong>CPU Optimized:</strong> Uses ONNX Runtime and quantization to run efficiently on standard CPUs without GPU requirements.</li>
+                            <li><strong>Synchronization:</strong> Streams audio packets and blendshape weights together at 30 FPS for jitter-free animation.</li>
+                        </ul>
                     </div>
                 </div>
             </div>
