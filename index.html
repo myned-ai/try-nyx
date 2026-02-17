@@ -65,25 +65,63 @@
         
         .feature-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
         .teaser-shadow { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+
+        /* Mobile menu dropdown */
+        .mobile-menu-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 0.5rem;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            display: none;
+            flex-direction: column;
+            gap: 0.75rem;
+            z-index: 50;
+            min-width: 180px;
+        }
+        .mobile-menu-dropdown.open { display: flex; }
     </style>
 </head>
 <body class="antialiased selection:bg-brand selection:text-white relative">
 
     <!-- Top Left Branding -->
-    <div class="absolute top-6 left-6 hidden md:flex items-center text-sm font-medium text-gray-500 font-sans">
+    <div class="absolute top-6 left-6 flex items-center text-sm font-medium text-gray-500 font-sans">
         Designed by&nbsp;<a href="https://myned.ai" class="text-[#2e3a87] hover:text-brand transition-colors">Myned AI</a>
     </div>
 
-    <!-- Top Right GitHub Buttons -->
+    <!-- Top Right GitHub Buttons (desktop) -->
     <div class="absolute top-6 right-6 hidden md:flex items-center gap-3">
-        <!-- Star Repo -->
         <a class="github-button" href="https://github.com/myned-ai/avatar-chat-widget" data-color-scheme="no-preference: light; light: light; dark: dark;" data-icon="octicon-star" data-size="large" data-show-count="false" aria-label="Star myned-ai/avatar-chat-widget on GitHub">Star</a>
-        <!-- Follow Org -->
         <a class="github-button" href="https://github.com/myned-ai" data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large" aria-label="Follow @myned-ai on GitHub">Follow @myned-ai</a>
     </div>
 
+    <!-- Top Right Hamburger Menu (mobile) -->
+    <div class="absolute top-5 right-5 md:hidden" style="z-index:60;">
+        <button id="mobileMenuBtn" aria-label="Open menu" class="p-2 rounded-lg border border-gray-200 bg-white shadow-sm hover:bg-gray-50 transition">
+            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+        <div id="mobileMenuDropdown" class="mobile-menu-dropdown">
+            <a class="github-button" href="https://github.com/myned-ai/avatar-chat-widget" data-color-scheme="no-preference: light; light: light; dark: dark;" data-icon="octicon-star" data-size="large" data-show-count="false" aria-label="Star myned-ai/avatar-chat-widget on GitHub">Star</a>
+            <a class="github-button" href="https://github.com/myned-ai" data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large" aria-label="Follow @myned-ai on GitHub">Follow @myned-ai</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('mobileMenuBtn').addEventListener('click', function(e) {
+            e.stopPropagation();
+            document.getElementById('mobileMenuDropdown').classList.toggle('open');
+        });
+        document.addEventListener('click', function() {
+            document.getElementById('mobileMenuDropdown').classList.remove('open');
+        });
+    </script>
+
     <!-- HEADER / TITLE -->
-    <header class="max-w-4xl mx-auto px-6 pt-12 pb-6 text-center">
+    <header class="max-w-4xl mx-auto px-6 pt-20 pb-6 text-center">
         <h1 class="font-display text-4xl md:text-5xl font-bold tracking-tight mb-4 leading-tight text-[#2e3a87]">
             Nyx Web Chat Widget
         </h1>
